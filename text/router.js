@@ -2,50 +2,17 @@ const express = require('express')
 
 const config = require('../config')
 const bodyParser = require('body-parser')
-const app = express()
-const { grammar } = require('./grammar')
-
-const {Text} = require('./models')
-
+const controller = require('./controller')
 const textRouter = express.Router()
 
 const jsonParser = bodyParser.json()
 
-textRouter.get('/:uid', jsonParser, (req, res) => {
-	Text.find({author: req.params.uid})
-		.then(papers => {
-			res.send(papers)
-		})
-})
+textRouter.get('/:uid', jsonParser, controller.getText)
 
-textRouter.post('/', jsonParser, (req, res) => {
-	// async (req,res) => {
-	// 	let edited 
-	// 	try {
-	// 		edited = await grammar(req.body.body)
-	// 	}
-	// 	catch(e) {
-	// 		console.log('err in grammaer', e)
-	// 	}
-	// 	console.log("edited", edited)
-	// 	res.send(edited)
-	// }
-	Text.create({
-		title: 'hello',
-		body: 'hi there hi there34',
-		author: '59caaa71e6481419a7eab7cf',
-		dateCreated: Date.now(),
-		comments: [],
-		score: {
-			upvotes: 10,
-			downvotes: 5
-		}
-	})
+textRouter.delete('/:uid/:id', jsonParser, controller.deleteText)
 
-	res.send({hello: 'hello'})
-})
+textRouter.post('/', jsonParser, controller.saveTextToApi)
 
-
-
+textRouter.get('/edits/:id', jsonParser, controller.getEdits)
 
 module.exports = { textRouter }

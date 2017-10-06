@@ -2,10 +2,14 @@ const mongoose = require('mongoose')
 
 mongoose.Promise = global.Promise
 
-const TextSchema = mongoose.Schema({
-	title: String,
+const EditSchema = mongoose.Schema({
+	textId: { type: mongoose.Schema.Types.ObjectId, ref: 'Text' },
 	authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	authorName: String,
+	editorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+	editorName: String,
+	editorComment: String,
+	title: String,
 	body: String,
 	dateCreated: Date,
 	comments: [{
@@ -16,6 +20,6 @@ const TextSchema = mongoose.Schema({
 	}]
 })
 
-const Text = mongoose.model('Text', TextSchema)
+const Edit = mongoose.model('Edit', EditSchema)
 
-module.exports = { Text }
+module.exports = { Edit }

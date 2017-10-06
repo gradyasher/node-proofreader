@@ -1,8 +1,9 @@
-const express = require('express');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
+const express = require('express')
+const passport = require('passport')
+const jwt = require('jsonwebtoken')
 
-const config = require('../config');
+
+const config = require('../config')
 
 const createAuthToken = user => {
     return jwt.sign({user}, config.JWT_SECRET, {
@@ -12,16 +13,15 @@ const createAuthToken = user => {
     });
 };
 
-const router = express.Router();
+const router = express.Router()
 
 router.post(
     '/login',
     passport.authenticate('basic', {session: false}),
     (req, res) => {
-        
-        const authToken = createAuthToken(req.user.apiRepr());
+        const authToken = createAuthToken(req.user.apiRepr())
         const uid = req.user._id
-        res.json({authToken, uid});
+        res.json({authToken, uid})
     }
 );
 
@@ -32,8 +32,10 @@ router.post(
     passport.authenticate('jwt', {session: false}),
     (req, res) => {
         const authToken = createAuthToken(req.user);
-        res.json({authToken});
+        res.json({
+            authToken
+        })
     }
-);
+)
 
-module.exports = { router };
+module.exports = { router }
