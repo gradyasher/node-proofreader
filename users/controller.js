@@ -1,4 +1,6 @@
 const { User } = require('./models')
+const { Text } = require('../text/models')
+const { Edit } = require('../edit/models')
 
 exports.createUser = (req, res) => {
     const requiredFields = ['username', 'password'];
@@ -118,4 +120,29 @@ exports.createUser = (req, res) => {
             }
             res.status(500).json({code: 500, message: 'Internal server error'});
         })
+}
+
+exports.getUserInfo = async (req, res) => {
+    const { username } = await User.findOne({ _id: req.params.userId })
+        .then(user => {
+            return user
+        })
+    
+    const texts = await Text.find({ authorId: req.params.userId })
+        .then(texts => {
+            return texts
+        })
+    
+    const edits = await Edit.find({ editorId: req.params.userId })
+        .then(edits => {
+            return edits
+        })
+    
+    const infoObj = {
+        username,
+        texts,
+        edits
+    }
+
+    res.send(infoObj)
 }
