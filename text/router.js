@@ -15,4 +15,6 @@ textRouter.post('/', jsonParser, controller.saveTextToApi)
 
 textRouter.get('/edits/:id', jsonParser, controller.getEdits)
 
+textRouter.get('/', jsonParser, controller.getRecentTexts)
+
 module.exports = { textRouter }

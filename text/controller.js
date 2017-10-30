@@ -8,6 +8,7 @@ exports.saveTextToApi = (req, res) => {
 		authorId: req.body.authorId,
 		authorName: req.body.authorName,
 		dateCreated: Date.now(),
+		description: req.body.description,
 		comments: []
 	})
 	.then(text => {
@@ -34,5 +35,12 @@ exports.getEdits = (req, res) => {
 	Edit.find({ textId: req.params.id })
 		.then(edits => {
 			res.send(edits)
+		})
+}
+
+exports.getRecentTexts = async (req,res) => {
+	await Text.find({}).sort({$natural:-1}).limit(50)
+		.then(texts => {
+			res.send(texts)
 		})
 }

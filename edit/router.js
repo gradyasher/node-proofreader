@@ -9,7 +9,9 @@ const jsonParser = bodyParser.json()
 
 router.post('/', jsonParser, controller.createEdit)
 
-router.get('/:uid', jsonParser, controller.getEdits)
+router.post('/all', jsonParser, controller.getAllEdits)
+
+router.get('/:uid', jsonParser, controller.getUserEdits)
 
 router.delete('/:uid/:id', jsonParser, controller.deleteEdit)
 

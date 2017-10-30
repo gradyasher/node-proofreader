@@ -20,7 +20,7 @@ exports.createUser = (req, res) => {
         field => field in req.body && typeof req.body[field] !== 'string'
     );
 
-    if (nonStringField) {
+    if(nonStringField) {
         return res.status(422).json({
             code: 422,
             reason: 'ValidationError',
@@ -34,7 +34,7 @@ exports.createUser = (req, res) => {
         field => req.body[field].trim() !== req.body[field]
     );
 
-    if (nonTrimmedField) {
+    if(nonTrimmedField) {
         return res.status(422).json({
             code: 422,
             reason: 'ValidationError',
@@ -123,7 +123,7 @@ exports.createUser = (req, res) => {
 }
 
 exports.getUserInfo = async (req, res) => {
-    const { username } = await User.findOne({ _id: req.params.userId })
+    const { username, bio, firstName, lastName } = await User.findOne({ _id: req.params.userId })
         .then(user => {
             return user
         })
@@ -140,6 +140,9 @@ exports.getUserInfo = async (req, res) => {
     
     const infoObj = {
         username,
+        bio,
+        firstName,
+        lastName,
         texts,
         edits
     }

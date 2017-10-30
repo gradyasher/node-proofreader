@@ -7,6 +7,7 @@ const TextSchema = mongoose.Schema({
 	authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	authorName: String,
 	body: String,
+	description: String,
 	dateCreated: Date,
 	comments: [{
 		author: String,

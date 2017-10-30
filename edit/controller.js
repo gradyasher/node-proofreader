@@ -20,10 +20,17 @@ exports.createEdit = async (req,res) => {
 	})
 }
 
-exports.getEdits = (req, res) => {
+exports.getUserEdits = (req, res) => {
 	Edit.find({ editorId: req.params.uid })
 		.then(texts => {
 			res.send(texts)
+		})
+}
+
+exports.getAllEdits = async(req, res) => {
+	await Edit.find({ textId: { $all : req.body.textIds } })
+		.then(edits => {
+			res.send(edits)
 		})
 }
 
