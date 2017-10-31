@@ -28,7 +28,7 @@ exports.getUserEdits = (req, res) => {
 }
 
 exports.getAllEdits = async(req, res) => {
-	await Edit.find({ textId: { $all : req.body.textIds } })
+	await Edit.find({ textId: { $in : req.body.textIds } })
 		.then(edits => {
 			res.send(edits)
 		})
